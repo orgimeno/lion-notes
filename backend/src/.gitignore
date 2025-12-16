@@ -25,7 +25,6 @@ yarn-error.log
 # Laravel / PHP
 /vendor/
 .env
-.env.*
 /bootstrap/cache/*
 /storage/*.key
 /storage/logs/*
