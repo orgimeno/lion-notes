@@ -20,7 +20,10 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-    listNotes: (q = "") => request(`/api/notes?q=${encodeURIComponent(q)}`),
+    listNotes: (q = "", sort = "desc", page = 1) =>
+        request(
+            `/api/notes?q=${encodeURIComponent(q)}&sort=${encodeURIComponent(sort)}&page=${encodeURIComponent(page)}`
+        ),
     getNote: (id) => request(`/api/notes/${id}`),
     createNote: (payload) => request(`/api/notes`, { method: "POST", body: JSON.stringify(payload) }),
     updateNote: (id, payload) => request(`/api/notes/${id}`, { method: "PUT", body: JSON.stringify(payload) }),
