@@ -2,7 +2,7 @@ services:
   backend:
     build:
       context: ./backend/docker
-    command: sh -c "cd /var/www/html && composer install --no-interaction && php-fpm"
+    command: sh -c "cd /var/www/html && mkdir -p bootstrap/cache storage && composer install --no-interaction && php-fpm -F"
     container_name: lion-backend
     volumes:
       - ./backend/src:/var/www/html
