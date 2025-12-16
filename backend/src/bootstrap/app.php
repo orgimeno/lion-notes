@@ -15,12 +15,12 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
-        //
+    ->withMiddleware(function ($middleware) {
+        $middleware->append(\Illuminate\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->render(function (NotFoundHttpException|ModelNotFoundException $e, Request $request) {
-            // Pista: solo para /api/*
+            // solo para /api/*
             if ($request->is('api/*')) {
                 return response()->json([
                     'data' => null,

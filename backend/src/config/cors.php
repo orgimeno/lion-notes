@@ -3,7 +3,7 @@
 return [
 
     // Solo API (evita tocar rutas web)
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*'],
 
     // Permitimos todos los métodos necesarios
     'allowed_methods' => ['*'],
