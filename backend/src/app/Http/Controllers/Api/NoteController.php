@@ -41,13 +41,21 @@ class NoteController extends Controller
         // Nota: tratamos q como string opcional; si viene vacío, no filtramos.
         $q = trim((string) $request->query('q', ''));
 
+        // Solo aceptamos asc/desc. Default: desc.
+        $sort = strtolower((string) $request->query('sort', 'desc'));
+        $sort = in_array($sort, ['asc', 'desc'], true) ? $sort : 'desc';
+
         $paginator = Note::query()
             // Cuando q no está vacío, aplicamos filtro en title.
             ->when($q !== '', fn ($query) => $query->where('title', 'like', "%{$q}%"))
             // Orden descendente por fecha de creación.
-            ->orderByDesc('created_at')
-            // Paginación fija a 10.
-            ->paginate(10);
+            ->orderBy('created_at', $sort)
+            // Paginas
+            ->paginate(10)
+            ->appends([
+                'q' => $q,
+                'sort' => $sort,
+            ]);
 
         /**
          * Importante:
@@ -59,6 +67,7 @@ class NoteController extends Controller
             'meta' => [
                 'current_page' => $paginator->currentPage(),
                 'last_page' => $paginator->lastPage(),
+                'per_page' => $paginator->perPage(),
                 'total' => $paginator->total(),
             ],
         ]);
