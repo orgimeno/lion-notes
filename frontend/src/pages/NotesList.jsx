@@ -108,24 +108,20 @@ export default function NotesList() {
       {errMsg && <p style={{ marginTop: 16, color: "crimson" }}>{errMsg}</p>}
 
       {!loading && !errMsg && (
-        <div style={{ marginTop: 16, display: "grid", gap: 10 }}>
+        <div className="notes-masonry" style={{ marginTop: 16 }}>
           {items.length === 0 && <p>No hay notas.</p>}
 
           {items.map((n) => (
-            <div key={n.id} style={{ border: "1px solid #ddd", borderRadius: 10, padding: 12 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
+            <div key={n.id} className="note-card">
+              <div style={{ display: "flex", justifyContent: "space-between", gap: 10, alignItems: "start" }}>
                 <div>
                   <strong>{n.title}</strong>
                   <div style={{ opacity: 0.7, fontSize: 12 }}>{n.created_at}</div>
                 </div>
 
                 <div style={{ display: "flex", gap: 8 }}>
-                  <Link to={`/edit/${n.id}`} style={{ padding: "6px 10px", border: "1px solid #ccc", borderRadius: 6, textDecoration: "none" }}>
-                    Editar
-                  </Link>
-                  <button onClick={() => onDelete(n.id)} style={{ padding: "6px 10px" }}>
-                    Borrar
-                  </button>
+                  <Link to={`/edit/${n.id}`}>Editar</Link>
+                  <button onClick={() => onDelete(n.id)}>Borrar</button>
                 </div>
               </div>
 

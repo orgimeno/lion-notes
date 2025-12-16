@@ -4,13 +4,15 @@ import NoteForm from "./pages/NoteForm";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<NotesList />} />
-        <Route path="/new" element={<NoteForm mode="create" />} />
-        <Route path="/edit/:id" element={<NoteForm mode="edit" />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <div style={{ maxWidth: 900, margin: "0 auto", padding: 16 }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<NotesList />} />
+          <Route path="/new" element={<NoteForm mode="create" />} />
+          <Route path="/edit/:id" element={<NoteForm mode="edit" />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
