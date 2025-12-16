@@ -12,15 +12,17 @@ services:
       if [ ! -f .env ]; then
         cp .env.example .env;
       fi &&
-      if [ ! -f database/database.sqlite ]; then
-        touch database/database.sqlite;
-      fi &&
+      mkdir -p storage/framework/{cache,sessions,views} bootstrap/cache database &&
+      touch database/database.sqlite &&
+      chown -R www-data:www-data storage bootstrap/cache database &&
+      chmod -R ug+rwx storage bootstrap/cache database &&
       composer install --no-interaction &&
       php artisan key:generate --force &&
       php artisan migrate --force &&
       php-fpm -F
       "
-
+    environment:
+      COMPOSER_PROCESS_TIMEOUT: 1200
     volumes:
       # Código (bind mount)
       - ./backend/src:/var/www/html
